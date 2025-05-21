@@ -1,2 +1,6 @@
 # Telegram Reminder Bot 
-A simple async Telegram bot for setting and receiving reminders.  
+ A simple async Telegram bot for setting and receiving reminders. 
+ 
+## Features 
+- Add reminders with "/add <text> at <time>". 
+- Receive notifications at specified times. 
