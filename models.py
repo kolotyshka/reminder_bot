@@ -1,3 +1,5 @@
+import json
+
 class Reminder:
     def __init__(self, text, time):
         self.text = text
@@ -18,10 +20,22 @@ class Bot:
 
 class Storage:
     def __init__(self):
-        self.db = None
+        self.db = "reminders.json"
 
     def save_reminder(self, reminder):
-        pass
+        data = []
+        try:
+            with open(self.db, 'r') as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            pass
+        data.append(reminder.to_dict())
+        with open(self.db, 'w') as f:
+            json.dump(data, f)
 
     def load_reminders(self):
-        return []
+        try:
+            with open(self.db, 'r') as f:
+                return [Reminder(d["text"], d["time"]) for d in json.load(f)]
+        except FileNotFoundError:
+            return []
