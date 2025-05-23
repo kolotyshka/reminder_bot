@@ -31,7 +31,7 @@ async def on_add(message: types.Message):
     except ValueError:
         await message.reply("Invalid time format! Use HH:MM (e.g., 14:30)")
         return
-    reminder = Reminder(text, time)
+    reminder = Reminder(text, time, message.chat.id)
     bot_instance.add_reminder(reminder)
     storage.save_reminder(reminder)
     await message.reply("Reminder set!")
