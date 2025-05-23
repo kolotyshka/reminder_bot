@@ -1,4 +1,3 @@
-
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 import asyncio
@@ -13,6 +12,9 @@ dp = Dispatcher()
 bot_instance = ReminderBot()
 storage = Storage()
 
+for reminder in storage.load_reminders():
+    bot_instance.add_reminder(reminder)
+
 @dp.message(Command("start"))
 async def on_start(message: types.Message):
     await message.reply("Welcome to Reminder Bot!"
@@ -22,14 +24,18 @@ async def on_start(message: types.Message):
 @log_command
 async def on_add(message: types.Message):
     parts = message.text.split(" at ", 1)
-    if len (parts) != 2:
+    if len(parts) != 2:
         await message.reply("Use: /add <text> at <time>")
         return
-    text, time = parts
+    command, time = parts
+    text = command.replace("/add", "").strip()
+    if not text:
+        await message.reply("Please provide reminder text")
+        return
     try:
         datetime.strptime(time.strip(), "%H:%M")
     except ValueError:
-        await message.reply("Invalid time format! Use HH:MM (e.g., 14:30)")
+        await message.reply("Invalid time format! Use HH:MM (e.g. 14:30)")
         return
     reminder = Reminder(text, time, message.chat.id)
     bot_instance.add_reminder(reminder)
@@ -39,11 +45,14 @@ async def on_add(message: types.Message):
 async def check_reminders():
     while True:
         current_time = datetime.now().strftime("%H:%M")
+        reminders_to_remove = []
         for reminder in bot_instance.reminders:
             if reminder.time == current_time:
-                await bot.send_message(chat_id=bot_instance.reminders[0].chat_id,
+                await bot.send_message(chat_id=reminder.chat_id,
                                        text = f"Reminder: {reminder.text}")
-                bot_instance.reminders.remove(reminder)
+                reminders_to_remove.append(reminder)
+        for reminder in reminders_to_remove:
+            bot_instance.reminders.remove(reminder)
         await  asyncio.sleep(60)
 
 async def main():
