@@ -11,13 +11,13 @@ class Task:
 
 class TaskManager:
     def __init__(self):
-        self.reminders = []
+        self.tasks = []
 
-    async def send_reminder(self, reminder):
+    async def send_task(self, task):
         pass
 
-    def add_task(self, reminder):
-        self.reminders.append(reminder)
+    def add_task(self, task):
+        self.tasks.append(task)
 
 class Storage:
     def __init__(self):
@@ -34,7 +34,7 @@ class Storage:
         with open(self.db, 'w') as f:
             json.dump(data, f)
 
-    def load_task(self):
+    def load_tasks(self):
         try:
             with open(self.db, 'r') as f:
                 return [Task(d["text"], d["time"], d.get("chat_id")) for d in json.load(f)]
