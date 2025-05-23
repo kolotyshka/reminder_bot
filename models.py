@@ -1,7 +1,7 @@
 import json
 
 class Reminder:
-    def __init__(self, text, time, chat_id):
+    def __init__(self, text, time, chat_id=None):
         self.text = text
         self.time = time
         self.chat_id = chat_id
@@ -37,6 +37,6 @@ class Storage:
     def load_reminders(self):
         try:
             with open(self.db, 'r') as f:
-                return [Reminder(d["text"], d["time"], d["chat_id"]) for d in json.load(f)]
+                return [Reminder(d["text"], d["time"], d.get("chat_id")) for d in json.load(f)]
         except FileNotFoundError:
             return []
