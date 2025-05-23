@@ -5,7 +5,9 @@ def log_command(func):
     @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open("bot.log", 'a', encoding="utf-8") as f:
-            f.write(f"{timestamp} Command {func.__name__} called\n")
+        message = args[0] if args else None
+        command_text = message.text if hasattr(message, 'text') else "unknown"
+        with open("bot.log", "a", encoding="utf-8") as f:
+            f.write(f"[{timestamp}] Command {func.__name__} called: {command_text}\n")
         return await func(*args, **kwargs)
     return wrapper
