@@ -4,3 +4,4 @@ __pycache__/
 .idea/ 
 bot.log 
 reminders.json 
+config.py 
