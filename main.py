@@ -3,26 +3,28 @@ from aiogram.filters import Command
 import asyncio
 from datetime import datetime
 from decorators import log_command
-from models import Reminder, Bot as ReminderBot, Storage
-
-API_TOKEN = "7936831978:AAHRX2viqIzDhG3IvlvlZjUzD0rUHCub_3o"
+from models import Task, TaskManager, Storage
+from config import API_TOKEN  # Импортируем токен
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-bot_instance = ReminderBot()
+task_manager = TaskManager()  # Управляет задачами
 storage = Storage()
 
-for reminder in storage.load_reminders():
-    bot_instance.add_reminder(reminder)
+# Загружаем задачи при старте
+for task in storage.load_tasks():
+    task_manager.add_task(task)
 
 @dp.message(Command("start"))
+@log_command
 async def on_start(message: types.Message):
-    await message.reply("Welcome to Reminder Bot!"
-                        " Use /add <text> at <time> to set a reminder")
+    """Отправляет приветственное сообщение."""
+    await message.reply("Welcome to Reminder Bot! Use /add <text> at <time> to set a reminder")
 
 @dp.message(Command("add"))
 @log_command
 async def on_add(message: types.Message):
+    """Добавляет новую задачу с текстом и временем."""
     parts = message.text.split(" at ", 1)
     if len(parts) != 2:
         await message.reply("Use: /add <text> at <time>")
@@ -35,28 +37,29 @@ async def on_add(message: types.Message):
     try:
         datetime.strptime(time.strip(), "%H:%M")
     except ValueError:
-        await message.reply("Invalid time format! Use HH:MM (e.g. 14:30)")
+        await message.reply("Invalid time format! Use HH:MM (e.g., 14:30)")
         return
-    reminder = Reminder(text, time, message.chat.id)
-    bot_instance.add_reminder(reminder)
-    storage.save_reminder(reminder)
+    task = Task(text, time, message.chat.id)
+    task_manager.add_task(task)
+    storage.save_task(task)
     await message.reply("Reminder set!")
 
-async def check_reminders():
+async def check_tasks():
+    """Проверяет задачи каждую минуту и отправляет уведомления."""
     while True:
         current_time = datetime.now().strftime("%H:%M")
-        reminders_to_remove = []
-        for reminder in bot_instance.reminders:
-            if reminder.time == current_time:
-                await bot.send_message(chat_id=reminder.chat_id,
-                                       text = f"Reminder: {reminder.text}")
-                reminders_to_remove.append(reminder)
-        for reminder in reminders_to_remove:
-            bot_instance.reminders.remove(reminder)
-        await  asyncio.sleep(60)
+        tasks_to_remove = []
+        for task in task_manager.tasks:
+            if task.time == current_time:
+                await bot.send_message(chat_id=task.chat_id, text=f"Reminder: {task.text}")
+                tasks_to_remove.append(task)
+        for task in tasks_to_remove:
+            task_manager.tasks.remove(task)
+        await asyncio.sleep(60)
 
 async def main():
-    asyncio.create_task(check_reminders())
+    """Запускает таймер и бота."""
+    asyncio.create_task(check_tasks())
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
