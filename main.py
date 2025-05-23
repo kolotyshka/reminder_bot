@@ -4,11 +4,11 @@ import asyncio
 from datetime import datetime
 from decorators import log_command
 from models import Task, TaskManager, Storage
-from config import API_TOKEN  # Импортируем токен
+from config import API_TOKEN
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-task_manager = TaskManager()  # Управляет задачами
+task_manager = TaskManager()
 storage = Storage()
 
 # Загружаем задачи при старте
