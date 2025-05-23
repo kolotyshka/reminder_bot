@@ -26,8 +26,18 @@ async def on_add(message: types.Message):
     text, time = parts
     reminder = Reminder(text, time)
     Bot().add_reminder(reminder)
-    await message.reply
     await message.reply("Reminder set!")
+
+async def check_reminders():
+    bot_instance = Bot()
+    while True:
+        for reminder in bot_instance.reminders:
+            print(f"Reminder: {reminder.text}")
+        await asyncio.sleep(60)
+
+async def main():
+    asyncio.create_task(check_reminders())
+    await dp.start_polling(bot)
 
 async def main():
     await dp.start_polling(bot)
