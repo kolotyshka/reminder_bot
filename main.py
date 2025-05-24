@@ -12,19 +12,22 @@ task_manager = TaskManager()
 storage = Storage()
 
 # Загружаем задачи при старте
+# Load tasks at startup
 for task in storage.load_tasks():
     task_manager.add_task(task)
 
 @dp.message(Command("start"))
 @log_command
 async def on_start(message: types.Message):
-    """Отправляет приветственное сообщение."""
+    """Отправляет приветственное сообщение.
+    Sends a welcome message."""
     await message.reply("Welcome to Reminder Bot! Use /add <text> at <time> to set a reminder")
 
 @dp.message(Command("add"))
 @log_command
 async def on_add(message: types.Message):
-    """Добавляет новую задачу с текстом и временем."""
+    """Добавляет новую задачу с текстом и временем.
+    Adds a new task with text and time."""
     parts = message.text.split(" at ", 1)
     if len(parts) != 2:
         await message.reply("Use: /add <text> at <time>")
@@ -45,7 +48,8 @@ async def on_add(message: types.Message):
     await message.reply("Reminder set!")
 
 async def check_tasks():
-    """Проверяет задачи каждую минуту и отправляет уведомления."""
+    """Проверяет задачи каждую минуту и отправляет уведомления.
+    Checks tasks every minute and sends notifications."""
     while True:
         current_time = datetime.now().strftime("%H:%M")
         tasks_to_remove = []
@@ -58,7 +62,8 @@ async def check_tasks():
         await asyncio.sleep(60)
 
 async def main():
-    """Запускает таймер и бота."""
+    """Запускает таймер и бота.
+    Starts the timer and the bot."""
     asyncio.create_task(check_tasks())
     await dp.start_polling(bot)
 
