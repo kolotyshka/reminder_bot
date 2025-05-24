@@ -35,19 +35,19 @@ class Storage:
         Saves the task to a JSON file."""
         data = []
         try:
-            with open(self.db, 'r') as f:
+            with open(self.db, 'r', encoding='utf-8') as f:
                 data = json.load(f)
         except FileNotFoundError:
             pass
         data.append(task.to_dict())
-        with open(self.db, 'w') as f:
+        with open(self.db, 'w', encoding='utf-8') as f:
             json.dump(data, f)
 
     def load_tasks(self):
         """Загружает задачи из JSON-файла.
         Loads tasks from a JSON file."""
         try:
-            with open(self.db, 'r') as f:
+            with open(self.db, 'r', encoding='utf-8') as f:
                 return [Task(d["text"], d["time"], d.get("chat_id")) for d in json.load(f)]
         except FileNotFoundError:
             return []
