@@ -47,11 +47,11 @@ async def on_add(message: types.Message):
     storage.save_task(task)
     await message.reply("Reminder set!")
 
-@dp.message(Command("List"))
+@dp.message(Command("list"))
 @log_command
 async def on_list(message: types.Message):
     """Показывает список всех задач.
-        Shows a list of all tasks."""
+    Shows a list of all tasks."""
     tasks = storage.load_tasks()
     if not tasks:
         await message.reply("No reminders set.")

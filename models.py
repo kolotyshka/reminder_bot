@@ -16,7 +16,7 @@ class TaskManager:
     def __init__(self):
         self.tasks = []
 
-    async def send_task(self, task):
+    async def send_task(self, task, bot: Bot):
         """Отправляет уведомление о задаче.
         Sends a task notification."""
         await bot.send_message(chat_id=task.chat_id, text=f"Reminder: {task.text}")
