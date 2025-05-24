@@ -1,4 +1,5 @@
 import json
+from aiogram import Bot
 
 class Task:
     def __init__(self, text, time, chat_id=None):
@@ -16,9 +17,9 @@ class TaskManager:
         self.tasks = []
 
     async def send_task(self, task):
-        """Отправляет уведомление о задаче (заглушка).
-        Sends a task notification (placeholder)."""
-        pass
+        """Отправляет уведомление о задаче.
+        Sends a task notification."""
+        await bot.send_message(chat_id=task.chat_id, text=f"Reminder: {task.text}")
 
     def add_task(self, task):
         """Добавляет задачу в список.

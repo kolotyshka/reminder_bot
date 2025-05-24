@@ -47,6 +47,18 @@ async def on_add(message: types.Message):
     storage.save_task(task)
     await message.reply("Reminder set!")
 
+@dp.message(Command("List"))
+@log_command
+async def on_list(message: types.Message):
+    """Показывает список всех задач.
+        Shows a list of all tasks."""
+    tasks = storage.load_tasks()
+    if not tasks:
+        await message.reply("No reminders set.")
+        return
+    response = "\n".join(f"{t.text} at {t.time}" for t in tasks)
+    await message.reply(f"Reminders:\n{response}")
+
 async def check_tasks():
     """Проверяет задачи каждую минуту и отправляет уведомления.
     Checks tasks every minute and sends notifications."""
@@ -55,7 +67,7 @@ async def check_tasks():
         tasks_to_remove = []
         for task in task_manager.tasks:
             if task.time == current_time:
-                await bot.send_message(chat_id=task.chat_id, text=f"Reminder: {task.text}")
+                await task_manager.send_task(task, bot)
                 tasks_to_remove.append(task)
         for task in tasks_to_remove:
             task_manager.tasks.remove(task)
