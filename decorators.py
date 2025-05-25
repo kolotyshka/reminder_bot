@@ -2,8 +2,7 @@ from datetime import datetime
 import functools
 
 def log_command(func):
-    """Логирует вызов команды бота в файл bot.log с временной меткой и текстом команды.
-        Logs the bot command call to bot.log with timestamp and command text."""
+    """Логирует вызов команды бота в файл bot.log с временной меткой и текстом команды."""
     @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
