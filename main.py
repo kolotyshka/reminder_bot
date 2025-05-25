@@ -1,3 +1,5 @@
+import json
+
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 import asyncio
@@ -58,6 +60,25 @@ async def on_list(message: types.Message):
         return
     response = "\n".join(f"{t.text} at {t.time}" for t in tasks)
     await message.reply(f"Reminders:\n{response}")
+
+@dp.message(Command("delete"))
+@log_command
+async def on_delete(message: types.Message):
+    """Удаляет задачу по индексу.
+    Deletes a task by index."""
+    try:
+        index = int(message.text.split()[1]) - 1
+        tasks = storage.load_tasks()
+        if 0 <= index < len(tasks):
+            tasks.pop(index)
+            with open (storage.db, 'w', encoding="utf-8") as f:
+                json.dump([t.to_dict() for t in tasks], f)
+            task_manager.tasks = tasks
+            await message.reply("Reminder deleted!")
+        else:
+            await message.reply("Invalid index!")
+    except (IndexError, ValueError):
+        await message.reply("Use: /delete <index>")
 
 async def check_tasks():
     """Проверяет задачи каждую минуту и отправляет уведомления.
