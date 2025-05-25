@@ -41,7 +41,7 @@ class Storage:
             pass
         data.append(task.to_dict())
         with open(self.db, 'w', encoding='utf-8') as f:
-            json.dump(data, f)
+            json.dump(data, f, ensure_ascii=False)
 
     def load_tasks(self):
         """Загружает задачи из JSON-файла.

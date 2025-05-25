@@ -30,7 +30,12 @@ async def on_start(message: types.Message):
 async def on_add(message: types.Message):
     """Добавляет новую задачу с текстом и временем.
     Adds a new task with text and time."""
-    parts = message.text.split(" at ", 1)
+    text = message.text
+    separator = " at " if " at " in text else " в " if " в " in text else None
+    if not separator:
+        await message.reply("Use: Add <text> at <time> or /add <text> в <time> ")
+        return
+    parts = text.split(separator, 1)
     if len(parts) != 2:
         await message.reply("Use: /add <text> at <time>")
         return
@@ -58,7 +63,7 @@ async def on_list(message: types.Message):
     if not tasks:
         await message.reply("No reminders set.")
         return
-    response = "\n".join(f"{t.text} at {t.time}" for t in tasks)
+    response = "\n".join(f"{i+1}. {t.text} at {t.time}" for i, t in enumerate(tasks))
     await message.reply(f"Reminders:\n{response}")
 
 @dp.message(Command("delete"))
@@ -72,7 +77,7 @@ async def on_delete(message: types.Message):
         if 0 <= index < len(tasks):
             tasks.pop(index)
             with open (storage.db, 'w', encoding="utf-8") as f:
-                json.dump([t.to_dict() for t in tasks], f)
+                json.dump([t.to_dict() for t in tasks], f, ensure_ascii=False)
             task_manager.tasks = tasks
             await message.reply("Reminder deleted!")
         else:
