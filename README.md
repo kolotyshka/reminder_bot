@@ -1,6 +1,8 @@
 # Reminder Bot / Бот Напоминаний 
  
 ## English 
+
+My first project, built with neural network help, to learn OOP, async programming, decorators, and JSON. Please don’t judge too harshly :)
  
 ### Overview 
 Reminder Bot is a Telegram bot designed to help users set reminders with optional dates. It supports both English and Russian languages, stores tasks in JSON, and sends notifications at the specified time. The project demonstrates Object-Oriented Programming (OOP), asynchronous programming, and a custom decorator for logging. 
@@ -56,6 +58,8 @@ Reminder Bot is a Telegram bot designed to help users set reminders with optiona
 --- 
  
 ## Русский 
+
+Мой первый проект, созданный с помощью нейросети, чтобы освоить ООП, асинхронность, декораторы и JSON. Не судите строго :)
  
 ### Обзор 
 Бот Напоминаний — это Telegram-бот, который помогает пользователям устанавливать напоминания с опциональной датой. Он поддерживает английский и русский языки, хранит задачи в JSON и отправляет уведомления в указанное время. Проект демонстрирует объектно-ориентированное программирование (ООП), асинхронное программирование и пользовательский декоратор для логирования. 
