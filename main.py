@@ -59,10 +59,12 @@ async def on_add(message: types.Message):
             return
 
         # Парсим время и дату
-        time_str = time_date.strip()
+        time_date = time_date.strip()
+        time_str = time_date
         date_str = None
-        if " " in time_str:
-            time_str, date_str = time_str.split(" ", 1)
+        if " " in time_date:
+            time_str, date_str = time_date.split(" ", 1)
+            date_str = date_str.strip()
 
         try:
             datetime.strptime(time_str, "%H:%M")
@@ -81,7 +83,10 @@ async def on_add(message: types.Message):
 
         # Проверяем, что дата/время в будущем
         task_datetime = datetime.strptime(f"{task_date} {time_str}", "%d.%m.%Y %H:%M")
-        if task_datetime < datetime.now():
+        now = datetime.now().replace(second=0, microsecond=0)
+        if task_datetime < now:
+            with open("bot.log", "a", encoding="utf-8") as f:
+                f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Rejected: {task_datetime} is before {now}\n")
             await message.reply("Cannot set reminder in the past!")
             return
 
@@ -137,11 +142,13 @@ async def check_tasks():
         current_time = current_datetime.strftime("%H:%M")
         tasks_to_remove = []
         for task in task_manager.tasks:
-            # Проверяем дату и время
             task_date = task.date or current_date
             if task_date == current_date and task.time == current_time:
                 await task_manager.send_task(task, bot)
                 tasks_to_remove.append(task)
+                with open("bot.log", "a", encoding="utf-8") as f:
+                    f.write(
+                        f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Sent reminder: {task.text} at {task.time} {task_date}\n")
         for task in tasks_to_remove:
             task_manager.tasks.remove(task)
         await asyncio.sleep(60)
