@@ -1,71 +1,109 @@
-# Telegram Reminder Bot 
-A simple asynchronous Telegram bot for setting and receiving reminders. 
+# Reminder Bot / Бот Напоминаний 
  
-## Features 
-- Add reminders with `/add <text> at <time>` (e.g., `/add Meeting at 14:30`). 
-- Receive notifications at specified times. 
-- Store reminders in JSON. 
+## English 
  
-## Installation 
+### Overview 
+Reminder Bot is a Telegram bot designed to help users set reminders with optional dates. It supports both English and Russian languages, stores tasks in JSON, and sends notifications at the specified time. The project demonstrates Object-Oriented Programming (OOP), asynchronous programming, and a custom decorator for logging. 
+ 
+### Features 
+- **Commands**: 
+  - `/start`: Displays a welcome message. 
+  - `/add <text> at <time> [date]` or `/add <text> в <time> [date]`: Adds a reminder (e.g., `/add Meeting at 14:30 27.05.2025` or `/add Встреча в 14:30`). 
+  - `/list`: Shows all reminders with their times and dates. 
+  - `/delete <index>`: Deletes a reminder by its index. 
+- **Notifications**: Sends `Reminder: <text>` at the specified time and date. 
+- **Storage**: Tasks are saved in `reminders.json` with UTF-8 encoding. 
+- **Languages**: Supports English and Russian text. 
+- **Logging**: Commands and notifications are logged in `bot.log`. 
+ 
+### Technologies 
+- **Python**: Core programming language. 
+- **aiogram**: Asynchronous Telegram Bot API framework. 
+- **asyncio**: For asynchronous task checking and notifications. 
+- **JSON**: For persistent storage. 
+- **OOP**: Classes for tasks, task manager, and storage. 
+- **Custom Decorator**: For command logging. 
+ 
+### Installation 
 1. Clone the repository: 
    ```bash 
    git clone https://github.com/kolotyshka/reminder_bot.git 
+   cd reminder_bot 
    ``` 
-2. Create and activate a virtual environment: 
+2. Install dependencies: 
    ```bash 
-   python -m venv .venv 
-   .venv\Scripts\activate 
+   pip install aiogram 
    ``` 
-3. Install dependencies: 
-   ```bash 
-   pip install -r requirements.txt 
+3. Create `config.py` with your Telegram Bot API token: 
+   ```python 
+   API_TOKEN = "your_bot_token_here" 
    ``` 
-4. Set your bot token in `config.py` (get it from @BotFather). 
-5. Run the bot: 
+4. Run the bot: 
    ```bash 
+   chcp 65001 
    python main.py 
    ``` 
  
-## Usage 
-- `/start`: Start the bot. 
-- `/add <text> at <time>`: Set a reminder (e.g., `/add Meeting at 14:30`). 
+### Usage 
+- Send `/start` to see the welcome message. 
+- Add a reminder: `/add Meeting at 14:30` or `/add Встреча в 14:30 27.05.2025`. 
+- List reminders: `/list`. 
+- Delete a reminder: `/delete 1`. 
  
-## Dependencies 
-- aiogram==3.20.0 
-- aiosqlite==0.21.0 
+### Repository 
+- GitHub: [https://github.com/kolotyshka/reminder_bot](https://github.com/kolotyshka/reminder_bot) 
  
-# Telegram Бот Напоминаний 
-Простой асинхронный Telegram-бот для установки и получения напоминаний. 
+--- 
  
-## Возможности 
-- Добавление напоминаний с помощью `/add <текст> at <время>` (например, `/add Встреча at 14:30`). 
-- Получение уведомлений в указанное время. 
-- Хранение напоминаний в JSON. 
+## Русский 
  
-## Установка 
-1. Клонируйте репозиторий: 
+### Обзор 
+Бот Напоминаний — это Telegram-бот, который помогает пользователям устанавливать напоминания с опциональной датой. Он поддерживает английский и русский языки, хранит задачи в JSON и отправляет уведомления в указанное время. Проект демонстрирует объектно-ориентированное программирование (ООП), асинхронное программирование и пользовательский декоратор для логирования. 
+ 
+### Функционал 
+- **Команды**: 
+  - `/start`: Показывает приветственное сообщение. 
+  - `/add <текст> at <время> [дата]` или `/add <текст> в <время> [дата]`: Добавляет напоминание (например, `/add Meeting at 14:30 27.05.2025` или `/add Встреча в 14:30`). 
+  - `/list`: Показывает все напоминания с временем и датой. 
+  - `/delete <индекс>`: Удаляет напоминание по его индексу. 
+- **Уведомления**: Отправляет `Reminder: <текст>` в указанное время и дату. 
+- **Хранение**: Задачи сохраняются в `reminders.json` с кодировкой UTF-8. 
+- **Языки**: Поддерживает английский и русский текст. 
+- **Логирование**: Команды и уведомления записываются в `bot.log`. 
+ 
+### Технологии 
+- **Python**: Основной язык программирования. 
+- **aiogram**: Асинхронный фреймворк для Telegram Bot API. 
+- **asyncio**: Для асинхронной проверки задач и уведомлений. 
+- **JSON**: Для постоянного хранения данных. 
+- **ООП**: Классы для задач, менеджера задач и хранения. 
+- **Пользовательский декоратор**: Для логирования команд. 
+ 
+### Установка 
+1. Скопируйте репозиторий: 
    ```bash 
    git clone https://github.com/kolotyshka/reminder_bot.git 
+   cd reminder_bot 
    ``` 
-2. Создайте и активируйте виртуальное окружение: 
+2. Установите зависимости: 
    ```bash 
-   python -m venv .venv 
-   .venv\Scripts\activate 
+   pip install aiogram 
    ``` 
-3. Установите зависимости: 
-   ```bash 
-   pip install -r requirements.txt 
+3. Создайте файл `config.py` с вашим токеном Telegram-бота: 
+   ```python 
+   API_TOKEN = "ваш_токен_бота" 
    ``` 
-4. Укажите токен бота в `config.py` (получите у @BotFather). 
-5. Запустите бота: 
+4. Запустите бота: 
    ```bash 
+   chcp 65001 
    python main.py 
    ``` 
  
-## Использование 
-- `/start`: Запустить бота. 
-- `/add <текст> at <время>`: Установить напоминание (например, `/add Встреча at 14:30`). 
+### Использование 
+- Отправьте `/start`, чтобы увидеть приветственное сообщение. 
+- Добавьте напоминание: `/add Meeting at 14:30` или `/add Встреча в 14:30 27.05.2025`. 
+- Просмотрите напоминания: `/list`. 
+- Удалите напоминание: `/delete 1`. 
  
-## Зависимости 
-- aiogram==3.20.0 
-- aiosqlite==0.21.0 
+### Репозиторий 
+- GitHub: [https://github.com/kolotyshka/reminder_bot](https://github.com/kolotyshka/reminder_bot) 
