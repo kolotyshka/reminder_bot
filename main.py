@@ -2,7 +2,7 @@ import json
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 import asyncio
-from datetime import datetime
+from datetime import datetime, timedelta
 from decorators import log_command
 from models import Task, TaskManager, Storage
 from config import API_TOKEN
@@ -79,7 +79,15 @@ async def on_add(message: types.Message):
                 await message.reply("Invalid date format! Use DD.MM.YYYY (e.g., 27.05.2025)")
                 return
         else:
-            task_date = datetime.now().strftime("%d.%m.%Y")
+            # Если дата не указана, выбираем сегодня или завтра
+            now = datetime.now()
+            current_time = now.strftime("%H:%M")
+            if time_str < current_time:
+                task_date = (now + timedelta(days=1)).strftime("%d.%m.%Y")
+            else:
+                task_date = now.strftime("%d.%m.%Y")
+            with open("bot.log", "a", encoding="utf-8") as f:
+                f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Set date: {task_date} for time {time_str}\n")
 
         # Проверяем, что дата/время в будущем
         task_datetime = datetime.strptime(f"{task_date} {time_str}", "%d.%m.%Y %H:%M")
