@@ -3,11 +3,12 @@ from aiogram import Bot
 from datetime import datetime
 
 class Task:
-    def __init__(self, text, time, chat_id=None, separator="at"):
+    def __init__(self, text, time, chat_id=None, separator="at", date=None):
         self.text = text
         self.time = time
         self.chat_id = chat_id
         self.separator = separator
+        self.date = date
 
     def to_dict(self):
         """Преобразует задачу в словарь для JSON."""
@@ -15,7 +16,8 @@ class Task:
             "text": self.text,
             "time": self.time,
             "chat_id": self.chat_id,
-            "separator": self.separator
+            "separator": self.separator,
+            "date": self.date
         }
 
 class TaskManager:
@@ -59,7 +61,8 @@ class Storage:
                     d["text"],
                     d["time"],
                     d.get("chat_id"),
-                    d.get("separator", "at")  # По умолчанию "at" для старых задач
+                    d.get("separator", "at"),
+                    d.get("date")
                 ) for d in json.load(f)]
         except (FileNotFoundError, json.JSONDecodeError) as e:
             with open("bot.log", "a", encoding="utf-8") as f:
