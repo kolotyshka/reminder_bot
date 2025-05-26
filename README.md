@@ -2,10 +2,8 @@
  
 ## English 
  
-### Overview 
 Reminder Bot is a Telegram bot designed to help users set reminders with optional dates. It supports both English and Russian languages, stores tasks in JSON, and sends notifications at the specified time. The project demonstrates Object-Oriented Programming (OOP), asynchronous programming, and a custom decorator for logging. 
  
-### Features 
 - **Commands**: 
   - `/start`: Displays a welcome message. 
   - `/add <text> at <time> [date]` or `/add <text> в <time> [date]`: Adds a reminder (e.g., `/add Meeting at 14:30 27.05.2025` or `/add Встреча в 14:30`). 
@@ -16,7 +14,6 @@ Reminder Bot is a Telegram bot designed to help users set reminders with optiona
 - **Languages**: Supports English and Russian text. 
 - **Logging**: Commands and notifications are logged in `bot.log`. 
  
-### Technologies 
 - **Python**: Core programming language. 
 - **aiogram**: Asynchronous Telegram Bot API framework. 
 - **asyncio**: For asynchronous task checking and notifications. 
@@ -24,7 +21,6 @@ Reminder Bot is a Telegram bot designed to help users set reminders with optiona
 - **OOP**: Classes for tasks, task manager, and storage. 
 - **Custom Decorator**: For command logging. 
  
-### Installation 
 1. Clone the repository: 
    ```bash 
    git clone https://github.com/kolotyshka/reminder_bot.git 
@@ -44,23 +40,19 @@ Reminder Bot is a Telegram bot designed to help users set reminders with optiona
    python main.py 
    ``` 
  
-### Usage 
 - Send `/start` to see the welcome message. 
 - Add a reminder: `/add Meeting at 14:30` or `/add Встреча в 14:30 27.05.2025`. 
 - List reminders: `/list`. 
 - Delete a reminder: `/delete 1`. 
  
-### Repository 
 - GitHub: [https://github.com/kolotyshka/reminder_bot](https://github.com/kolotyshka/reminder_bot) 
  
 --- 
  
 ## Русский 
  
-### Обзор 
 Бот Напоминаний — это Telegram-бот, который помогает пользователям устанавливать напоминания с опциональной датой. Он поддерживает английский и русский языки, хранит задачи в JSON и отправляет уведомления в указанное время. Проект демонстрирует объектно-ориентированное программирование (ООП), асинхронное программирование и пользовательский декоратор для логирования. 
  
-### Функционал 
 - **Команды**: 
   - `/start`: Показывает приветственное сообщение. 
   - `/add <текст> at <время> [дата]` или `/add <текст> в <время> [дата]`: Добавляет напоминание (например, `/add Meeting at 14:30 27.05.2025` или `/add Встреча в 14:30`). 
@@ -71,7 +63,6 @@ Reminder Bot is a Telegram bot designed to help users set reminders with optiona
 - **Языки**: Поддерживает английский и русский текст. 
 - **Логирование**: Команды и уведомления записываются в `bot.log`. 
  
-### Технологии 
 - **Python**: Основной язык программирования. 
 - **aiogram**: Асинхронный фреймворк для Telegram Bot API. 
 - **asyncio**: Для асинхронной проверки задач и уведомлений. 
@@ -79,7 +70,6 @@ Reminder Bot is a Telegram bot designed to help users set reminders with optiona
 - **ООП**: Классы для задач, менеджера задач и хранения. 
 - **Пользовательский декоратор**: Для логирования команд. 
  
-### Установка 
 1. Скопируйте репозиторий: 
    ```bash 
    git clone https://github.com/kolotyshka/reminder_bot.git 
@@ -99,11 +89,31 @@ Reminder Bot is a Telegram bot designed to help users set reminders with optiona
    python main.py 
    ``` 
  
-### Использование 
 - Отправьте `/start`, чтобы увидеть приветственное сообщение. 
 - Добавьте напоминание: `/add Meeting at 14:30` или `/add Встреча в 14:30 27.05.2025`. 
 - Просмотрите напоминания: `/list`. 
 - Удалите напоминание: `/delete 1`. 
  
-### Репозиторий 
 - GitHub: [https://github.com/kolotyshka/reminder_bot](https://github.com/kolotyshka/reminder_bot) 
+### Repository 
+- GitHub: [https://github.com/kolotyshka/reminder_bot](https://github.com/kolotyshka/reminder_bot) 
+ 
+*My first project, built with neural network help, to learn OOP, async programming, decorators, and JSON. Please don’t judge too harshly :).* 
+ 
+--- 
+## English 
+### Overview 
+### Features 
+### Technologies 
+### Installation 
+### Usage 
+### Repository 
+## Русский 
+### Обзор 
+### Функционал 
+### Технологии 
+### Установка 
+### Использование 
+### Репозиторий 
+ 
+*Мой первый проект, созданный с помощью нейросети, чтобы освоить ООП, асинхронность, декораторы и JSON. Не судите строго :).* 
