@@ -42,16 +42,11 @@ class Storage:
         try:
             with open(self.db, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            with open("bot.log", "a", encoding="utf-8") as f:
-                f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Load error: {e}\n")
+        except FileNotFoundError:
+            pass
         data.append(task.to_dict())
-        try:
-            with open(self.db, 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-        except Exception as e:
-            with open("bot.log", "a", encoding="utf-8") as f:
-                f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Save error: {e}\n")
+        with open(self.db, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
 
     def load_tasks(self):
         """Загружает задачи из JSON-файла."""
@@ -64,7 +59,5 @@ class Storage:
                     d.get("separator", "at"),
                     d.get("date")
                 ) for d in json.load(f)]
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            with open("bot.log", "a", encoding="utf-8") as f:
-                f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Load error: {e}\n")
+        except FileNotFoundError:
             return []
